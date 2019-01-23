@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/size_10dp"
+    android:theme="@style/AppTheme"
+    tools:context=".ui.chat.AddChatRoomDialog">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:text="@string/add_chat_room_topic"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/chat_room_name"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:layout_marginEnd="@dimen/size_20dp"
+            android:layout_marginStart="@dimen/size_20dp">
+
+            <EditText
+                android:id="@+id/chatRoomNameEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:inputType="textCapSentences"
+                android:singleLine="true"
+                android:textSize="15sp" />
+
+        </android.support.design.widget.TextInputLayout>
+    
+    <Button
+        android:id="@+id/saveChatRoomButton"
+        style="@style/widget.seamfix.Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:text="Save Room"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

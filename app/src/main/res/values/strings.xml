@@ -1,0 +1,8 @@
+<resources>
+	<string name="app_name">Seamfix Chat</string>
+	<string name="enter_a_message">Enter a Message here</string>
+	<string name="title_activity_home">HomeActivity</string>
+	<string name="add_chat_room_topic">Add Chat Room</string>
+	<string name="chat_id">Chat ID</string>
+	<string name="chat_room_name">Chat Room Name</string>
+</resources>
