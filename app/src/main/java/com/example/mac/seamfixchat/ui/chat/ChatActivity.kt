@@ -112,4 +112,9 @@ class ChatActivity : AppCompatActivity() {
 
     private fun publish(message: String?) = mqttHelper.publishToTopic(message)
 
+    override fun onDestroy() {
+        mqttHelper.mqttAndroidClient.disconnect()
+        super.onDestroy()
+    }
+
 }
