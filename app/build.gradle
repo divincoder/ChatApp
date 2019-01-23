@@ -36,11 +36,8 @@ dependencies {
     //eclipse paho dependencies
     api 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
     api 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
-    implementation 'com.github.stfalcon:chatkit:0.3.3'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
     implementation 'joda-time:joda-time:2.10.1'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
-//    implementation 'jp.wasabeef:glide-transformations:4.0.1'
+
 }

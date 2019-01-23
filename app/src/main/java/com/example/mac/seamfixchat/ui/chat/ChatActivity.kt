@@ -66,6 +66,7 @@ class ChatActivity : AppCompatActivity() {
 
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         linearLayoutManager.isSmoothScrollbarEnabled = true
+        linearLayoutManager.stackFromEnd = true
         chatRV.layoutManager = linearLayoutManager
         chatRV.adapter = messageAdapter
     }
@@ -76,12 +77,13 @@ class ChatActivity : AppCompatActivity() {
         mqttHelper = MqttHelper(applicationContext, title.toString(), Author(id = userId))
         mqttHelper.setCallback(object : MqttCallbackExtended {
             override fun connectComplete(b: Boolean, s: String) {
-//                loading.setLoadingText("Connected Successfully...")
-//                loading.setLoadingText("Waiting for Messages...")
+                loading.setLoadingText("Connected Successfully...")
+                loading.setLoadingText("Waiting for Messages...")
             }
 
             override fun connectionLost(throwable: Throwable) {
-//                loading.visibility = View.VISIBLE
+                loading.setLoadingText("Reconnecting...")
+                loading.visibility = View.VISIBLE
             }
 
             @Throws(Exception::class)
@@ -89,11 +91,10 @@ class ChatActivity : AppCompatActivity() {
                 Log.w("Debug", mqttMessage.toString())
                 loading.visibility = View.GONE
 
-
                 val message = Message(ChatActivity.VIEW_TYPE_SUB, DateTime.now().millis, mqttMessage.toString())
-
                 messageAdapter.addItem(message)
-                linearLayoutManager.scrollToPosition((messageAdapter.itemCount) - 1)
+
+                scroll()
             }
 
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
@@ -105,9 +106,17 @@ class ChatActivity : AppCompatActivity() {
                     Message(ChatActivity.VIEW_TYPE_PUB, DateTime.now().millis, iMqttDeliveryToken.message.toString())
 
                 messageAdapter.addItem(message)
-                linearLayoutManager.scrollToPosition(messageAdapter.itemCount - 1)
+                //linearLayoutManager.scrollToPosition(messageAdapter.itemCount - 1
+                scroll()
+
+
             }
         })
+    }
+
+    fun scroll() {
+        val messageCount = messageAdapter.itemCount
+        chatRV.scrollToPosition(messageCount)
     }
 
     private fun publish(message: String?) = mqttHelper.publishToTopic(message)
