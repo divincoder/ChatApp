@@ -14,10 +14,13 @@ class MqttHelper(
 
     var mqttAndroidClient: MqttAndroidClient
 
+
     companion object {
         private const val QOS_LEVEL = 1
+        //TODO Replace the ACCOUNT_USERNAME AND ACCOUNT_PASSWORD
         private const val ACCOUNT_USERNAME = "boipomxz"
         private const val ACCOUNT_PASSWORD = "Ss0wXGXy-Q5-"
+        //TODO REPLACE THE SERVERURI WITH YOURS AND THE PORT NUMBER
         private const val serverUri = "tcp://m16.cloudmqtt.com:19843"
     }
 
