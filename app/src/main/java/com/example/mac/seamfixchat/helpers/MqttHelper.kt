@@ -6,9 +6,11 @@ import com.example.mac.seamfixchat.model.Author
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
 
-class MqttHelper(context: Context,
-                 private val topic: String,
-                 private val author: Author) {
+class MqttHelper(
+    context: Context,
+    private val topic: String,
+    private val author: Author
+) {
 
     var mqttAndroidClient: MqttAndroidClient
 
@@ -99,23 +101,36 @@ class MqttHelper(context: Context,
         }
     }
 
-     fun publishToTopic(message: String) {
+    fun publishToTopic(message: String?) {
+        val mqttMessage = MqttMessage(message?.toByteArray()).apply {
+            isRetained = true
+            //id = author.id.toInt()
+        }
+
         try {
-            mqttAndroidClient.publish(topic, message.toByteArray(), QOS_LEVEL, true, null, object : IMqttActionListener {
-                override fun onSuccess(asyncActionToken: IMqttToken?) {
-                    Log.w("Mqtt", "Published!")
+            mqttAndroidClient.publish(topic, mqttMessage)
 
-                }
-
-                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                    Log.w("Mqtt", "Publishing failed")
-                }
-
-            })
         } catch (ex: MqttException) {
-            System.err.println("Exceptions publishing")
+            System.err.println("Exception publishing")
             ex.printStackTrace()
         }
+
+        //mqttAndroidClient.disconnect()
+    }
+
+    private val onConnect = object : IMqttActionListener {
+        override fun onSuccess(asyncActionToken: IMqttToken) {
+
+            val message = MqttMessage("Hello World".toByteArray())
+            try {
+                mqttAndroidClient.publish("test", message)
+            } catch (e: MqttException) {
+                e.printStackTrace()
+            }
+
+        }
+
+        override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {}
     }
 
     fun publish(message: String?) = mqttAndroidClient.publish(topic, message?.toByteArray(), QOS_LEVEL, false)!!

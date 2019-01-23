@@ -18,6 +18,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.joda.time.DateTime
 
 
+
+
 class ChatActivity : AppCompatActivity() {
     private lateinit var mqttHelper: MqttHelper
     private lateinit var messageAdapter: MessageAdapter
@@ -29,6 +31,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private val userId by lazy { getAndroidId() }
+    //private val userId = "042"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,7 @@ class ChatActivity : AppCompatActivity() {
         //click listener for FAB
         sendMessage.setOnClickListener {
             publish(messageEdt?.text?.toString())
+            messageEdt.text.clear()
         }
 
     }
@@ -72,18 +76,19 @@ class ChatActivity : AppCompatActivity() {
         mqttHelper = MqttHelper(applicationContext, title.toString(), Author(id = userId))
         mqttHelper.setCallback(object : MqttCallbackExtended {
             override fun connectComplete(b: Boolean, s: String) {
-                loading.setLoadingText("Connected Successfully...")
-                loading.setLoadingText("Waiting for Messages...")
+//                loading.setLoadingText("Connected Successfully...")
+//                loading.setLoadingText("Waiting for Messages...")
             }
 
             override fun connectionLost(throwable: Throwable) {
-                loading.visibility = View.VISIBLE
+//                loading.visibility = View.VISIBLE
             }
 
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("Debug", mqttMessage.toString())
                 loading.visibility = View.GONE
+
 
                 val message = Message(ChatActivity.VIEW_TYPE_SUB, DateTime.now().millis, mqttMessage.toString())
 
@@ -105,6 +110,6 @@ class ChatActivity : AppCompatActivity() {
         })
     }
 
-    private fun publish(message: String?) = mqttHelper.publish(message)
+    private fun publish(message: String?) = mqttHelper.publishToTopic(message)
 
 }
